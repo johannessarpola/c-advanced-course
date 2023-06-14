@@ -1,0 +1,6 @@
+#ifndef OTHER_H_INCLUDED
+#define OTHER_H_INCLUDED
+
+int getnumber(void);
+
+#endif // _MNT_Z_REPOS_C_ADVANCED_COURSE_SRC_MODULES_OTHER_H_
