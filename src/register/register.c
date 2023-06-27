@@ -14,5 +14,5 @@ int main() {
     register int *ptr_y = &y;
     printf("%p: %d\n", ptr_y, *ptr_y);
 
-    return 1;
+    return 0;
 }
