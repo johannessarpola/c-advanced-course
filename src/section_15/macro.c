@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 #define OU 3.14
 
 #define PRNT(a,b)\
