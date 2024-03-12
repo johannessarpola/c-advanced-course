@@ -7,16 +7,17 @@ CC = gcc
 CFLAGS = -Wall -Werror
 
 # Source file
-SOURCE = static_lib.c
+SOURCE = mylib.c
 
 # Object files
 OBJECTS = $(SOURCE:.c=.o)
 
 # Library name
-LIBRARY = static_lib.a
+LIBRARY_NAME = mylib
+LIBRARY = lib$(LIBRARY_NAME).a
 
 EXECUTABLE = main.out
-MAIN_SOURCE = static_lib_user.c
+MAIN_SOURCE = lib_user_main.c
 
 # Main target
 all: $(LIBRARY) $(EXECUTABLE)
@@ -31,11 +32,11 @@ $(LIBRARY): $(OBJECTS)
 
 # Clean up
 clean:
-	rm -f $(OBJECTS) $(LIBRARY)
+	rm -f $(OBJECTS) $(LIBRARY) $(EXECUTABLE)
 
 # Phony target to avoid conflicts with file named "clean"
 .PHONY: clean
 
 # gcc -L looks in directory for library files. -> -L. (working dir)
 $(EXECUTABLE): $(MAIN_SOURCE) $(LIBRARY)
-	$(CC) $(CFLAGS) $< -o $@ -L. -l:$(LIBRARY)
+	$(CC) $(CFLAGS) $< -o $@ -L. -l$(LIBRARY_NAME)
