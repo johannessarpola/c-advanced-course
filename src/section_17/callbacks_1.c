@@ -2,9 +2,11 @@
 #include <stdlib.h>
 
 // declare a new function pointer type
+// makes print_callback alias for void f(int) function call
 typedef void (*print_callback)(int);
 
 int add(int a, int b, print_callback print);
+int subtract(int a, int b);
 void console_print(int value);
 void file_print(int value);
 void read_file();
@@ -19,6 +21,10 @@ int main() {
     // print the output to a file
     add(10, 40, file_print);
 
+    // store func as a variable, intintfunc now means a pointer to 'int func(int,int)'
+    int(*intintfunc)(int, int) = subtract;
+    printf("%d\n", intintfunc(11, 12));
+
     read_file();
     return 0;
 }
@@ -32,6 +38,11 @@ void read_file() {
             printf("%c", ch);
         }
     }
+    printf("\n");
+}
+
+int subtract(int a, int b) {
+    return a - b;
 }
 
 int add(int a, int b, void (*print_callback)(int))
