@@ -44,7 +44,7 @@ int main()
     send(sock, data, data_size, 0);
     printf("sent message to the server\n");
 
-    valread = read(sock, read_buffer, BUFFER_SIZE);
+    valread = recv(sock, read_buffer, BUFFER_SIZE, 0);
     printf("response (%d length) from server:\n%s", valread, read_buffer);
     fflush(stdout);
     close(sock);

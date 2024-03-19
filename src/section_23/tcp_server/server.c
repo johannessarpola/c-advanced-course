@@ -63,7 +63,7 @@ int main() {
         exit(EXIT_FAILURE);
     }
 
-    // Listen for incoming connections
+    // Listen for incoming connections, 3 is the maximun connection
     if (listen(server_fd, 3) < 0) {
         perror("listen failed");
         exit(EXIT_FAILURE);
@@ -72,14 +72,14 @@ int main() {
     printf("Server listening on port %d\n", PORT);
 
     while (1) {
-        // create new socket from connections accepted
+        // create new socket from connections accepted, accepts waits for connections
         if ((new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen)) < 0) {
             perror("accept failed");
             exit(EXIT_FAILURE);
         }
 
         // echo request details
-        read(new_socket, buffer, BUFFER_SIZE);
+        recv(new_socket, buffer, BUFFER_SIZE, 0);
         printf("Request: %s\n", buffer);
 
         // add basic headers with dprintf
