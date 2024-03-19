@@ -82,7 +82,8 @@
     "type_traits": "c",
     "utility": "c",
     "signal.h": "c",
-    "stdint.h": "c"
+    "stdint.h": "c",
+    "chrono": "c"
   },
   "C_Cpp_Runner.useLinkTimeOptimization": false,
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
