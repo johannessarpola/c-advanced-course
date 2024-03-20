@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/sarpojoh/Projects/c-advanced-course/src/section_15",
-      "program": "/home/sarpojoh/Projects/c-advanced-course/src/section_15/build/Debug/outDebug",
+      "cwd": "/home/sarpojoh/Projects/c-advanced-course/src/section_21_1_multiprocess",
+      "program": "/home/sarpojoh/Projects/c-advanced-course/src/section_21_1_multiprocess/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "/usr/bin/gdb",
       "setupCommands": [

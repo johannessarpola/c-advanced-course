@@ -7,13 +7,13 @@
 
 short socketCreate(void)
 {
-    short hSocket;
+    short sock_fd;
     printf("Created the socket\n");
-    hSocket = socket(AF_INET, SOCK_STREAM, 0);
-    return hSocket;
+    sock_fd = socket(AF_INET, SOCK_STREAM, 0);
+    return sock_fd;
 }
 
-int bindCreatedSocket(int hSocket)
+int bindCreatedSocket(int sock_fd)
 {
     int iRetval = -1;
     int clientPort = 12345;
@@ -27,21 +27,21 @@ int bindCreatedSocket(int hSocket)
     remote.sin_addr.s_addr = htonl(INADDR_ANY);
     remote.sin_port = htons(clientPort); /* Local port */
 
-    iRetval = bind(hSocket, (struct sockaddr *)&remote, sizeof(remote));
+    iRetval = bind(sock_fd, (struct sockaddr *)&remote, sizeof(remote));
     return iRetval;
 }
 
 int main(int argc, char *argv[])
 {
-    int socket_desc = 0, sock = 0, clientLen = 0;
+    int sock_fd = 0, new_sock_fd = 0, clientLen = 0;
     struct sockaddr_in client;
     char client_message[200] = {0};
     char message[100] = {0};
 
     // Create socket
-    socket_desc = socketCreate();
+    sock_fd = socketCreate();
 
-    if (socket_desc == -1)
+    if (sock_fd == -1)
     {
         printf("Could not create socket");
         return 1;
@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
     printf("Socket created\n");
 
     // Bind
-    if (bindCreatedSocket(socket_desc) < 0)
+    if (bindCreatedSocket(sock_fd) < 0)
     {
         // print the error message
         perror("bind failed.");
@@ -60,15 +60,15 @@ int main(int argc, char *argv[])
     printf("bind done\n");
 
     // Listen
-    listen(socket_desc, 3);
+    listen(sock_fd, 3);
 
     printf("Waiting for incoming connections...\n");
     clientLen = sizeof(struct sockaddr_in);
 
     // accept connection from an incoming client
-    sock = accept(socket_desc, (struct sockaddr *)&client, (socklen_t *)&clientLen);
+    new_sock_fd = accept(sock_fd, (struct sockaddr *)&client, (socklen_t *)&clientLen);
 
-    if (sock < 0)
+    if (new_sock_fd < 0)
     {
         perror("accept failed");
         return 1;
@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
     memset(message, '\0', sizeof message);
 
     // Receive a reply from the client
-    if (recv(sock, client_message, 200, 0) < 0)
+    if (recv(new_sock_fd, client_message, 200, 0) < 0)
     {
         printf("recv failed");
     }
@@ -90,14 +90,14 @@ int main(int argc, char *argv[])
     i--;
     sprintf(message, "%d", i);
 
-    close(sock);
+    close(new_sock_fd);
 
     printf("Waiting for incoming connections...\n");
 
     // accept connection from an incoming client
-    sock = accept(socket_desc, (struct sockaddr *)&client, (socklen_t *)&clientLen);
+    new_sock_fd = accept(sock_fd, (struct sockaddr *)&client, (socklen_t *)&clientLen);
 
-    if (sock < 0)
+    if (new_sock_fd < 0)
     {
         perror("accept failed");
         return 1;
@@ -106,7 +106,7 @@ int main(int argc, char *argv[])
     printf("Connection accepted\n");
 
     // Send some data
-    if (send(sock, message, strlen(message), 0) < 0)
+    if (send(new_sock_fd, message, strlen(message), 0) < 0)
     {
         printf("Send failed");
         return 1;
